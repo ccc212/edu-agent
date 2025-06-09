@@ -1,4 +1,4 @@
-erver:
+server:
   port: 44844
   servlet:
     context-path: /api
@@ -11,3 +11,39 @@ spring:
     url: jdbc:mysql://localhost:3306/edu_agent?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
     username: root
     password: 123456
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+mybatis-plus:
+  type-aliases-package: cn.ccc212.eduagen.pojo.entity
+  type-handlers-package: cn.ccc212.eduagen.handler
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: delFlag # 全局逻辑删除的实体字段名
+      logic-delete-value: 1 # 逻辑已删除值（默认为 1）
+      logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
+  configuration:
+    call-setters-on-nulls: true # 解决查询字段值为null而不显示的问题
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  # 开发环境打印SQL
+
+knife4j:
+  enable: true
+  basic:
+    enable: true
+    username: admin
+    password: 123
+
+edu-agent:
+  jwt:
+    secret-key: edu-agent
+    ttl: 86400000  # 1000*60*60*24
+    token-name: Authorization
+  log:
+    mode: multi-thread # multi-thread-多线程 rabbitmq-消息队列
+    autolog:
+      enable: true
+

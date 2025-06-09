@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ccc212.eduagent.mapper.RoleMapper">
+
+    <select id="findExistingRoleCodes" resultType="java.lang.Integer">
+        SELECT count(role_code) FROM t_role WHERE role_code IN
+        <foreach item="item" collection="requestedRoleCodes" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

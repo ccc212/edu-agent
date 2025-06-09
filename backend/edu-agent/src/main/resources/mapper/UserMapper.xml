@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ccc212.eduagent.mapper.UserMapper">
+    <update id="setRoles">
+        update t_user
+        set role_code =
+            case user_id
+            <foreach collection="setRoleDTOs" item="setRoleDTO" separator=" ">
+                when #{setRoleDTO.userId} then #{setRoleDTO.roleCode}
+            </foreach>
+            else role_code
+        end
+        where user_id in
+        <foreach item="setRoleDTO" collection="setRoleDTOs" separator="," open="(" close=")">
+            #{setRoleDTO.userId}
+        </foreach>
+    </update>
+
+    <select id="search" resultType="cn.ccc212.eduagent.pojo.vo.UserInfoVO">
+        select
+        u.user_id,
+        u.name,
+        u.username,
+        u.student_id,
+        u.email,
+        u.role_code,
+        u.del_flag,
+        u.create_time,
+        u.update_time,
+        u.last_login_time
+        from t_user u
+        <where>
+            <if test="userPageDTO.userId != null">
+                u.user_id = #{userPageDTO.userId}
+            </if>
+            <if test="userPageDTO.name != null and userPageDTO.name != ''">
+                and u.name like concat('%', #{userPageDTO.name}, '%')
+            </if>
+            <if test="userPageDTO.username != null and userPageDTO.username != ''">
+                and u.username like concat('%', #{userPageDTO.username}, '%')
+            </if>
+            <if test="userPageDTO.studentId != null and userPageDTO.studentId != ''">
+                and u.student_id like concat('%', #{userPageDTO.studentId}, '%')
+            </if>
+            <if test="userPageDTO.email != null and userPageDTO.email != ''">
+                and u.email = #{userPageDTO.email}
+            </if>
+            <if test="userPageDTO.roleCode != null">
+                and u.role_code = #{userPageDTO.roleCode}
+            </if>
+            <if test="userPageDTO.delFlag != null">
+                and u.del_flag = #{userPageDTO.delFlag}
+            </if>
+            <if test="userPageDTO.createTimeStart != null and userPageDTO.createTimeEnd != null">
+                and u.create_time between #{userPageDTO.createTimeStart} and #{userPageDTO.createTimeEnd}
+            </if>
+        </where>
+        <if test="userPageDTO.orderByColumn != null and userPageDTO.orderByColumn != ''">
+            order by u.${userPageDTO.orderByColumn} ${userPageDTO.sortOrder}
+        </if>
+    </select>
+
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into t_user
+        (
+        `name`,
+        `username`,
+        `password`,
+        `role_code`,
+        `create_time`,
+        `update_time`,
+        `last_login_time`
+        )
+        values
+        <foreach collection="list" item="user" separator="," open="(" close=")">
+             <if test="user.name != null">
+                #{user.name},
+            </if>
+             <if test="user.username != null">
+                #{user.username},
+            </if>
+             <if test="user.password != null">
+                #{user.password},
+            </if>
+             <if test="user.roleCode != null">
+                #{user.roleCode},
+            </if>
+             <if test="user.createTime != null">
+                #{user.createTime},
+            </if>
+             <if test="user.updateTime != null">
+                #{user.updateTime},
+            </if>
+             <if test="user.lastLoginTime != null">
+                #{user.lastLoginTime}
+             </if>
+        </foreach>
+    </insert>
+</mapper>
