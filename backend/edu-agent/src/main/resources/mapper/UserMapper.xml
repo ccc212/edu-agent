@@ -67,33 +67,21 @@
         `username`,
         `password`,
         `role_code`,
+        `del_flag`,
         `create_time`,
-        `update_time`,
-        `last_login_time`
+        `update_time`
         )
         values
-        <foreach collection="list" item="user" separator="," open="(" close=")">
-             <if test="user.name != null">
-                #{user.name},
-            </if>
-             <if test="user.username != null">
-                #{user.username},
-            </if>
-             <if test="user.password != null">
-                #{user.password},
-            </if>
-             <if test="user.roleCode != null">
-                #{user.roleCode},
-            </if>
-             <if test="user.createTime != null">
-                #{user.createTime},
-            </if>
-             <if test="user.updateTime != null">
-                #{user.updateTime},
-            </if>
-             <if test="user.lastLoginTime != null">
-                #{user.lastLoginTime}
-             </if>
+        <foreach collection="users" item="user" separator=",">
+            (
+            #{user.name},
+            #{user.username},
+            #{user.password},
+            #{user.roleCode},
+            #{user.delFlag},
+            #{user.createTime},
+            #{user.updateTime}
+            )
         </foreach>
     </insert>
 </mapper>

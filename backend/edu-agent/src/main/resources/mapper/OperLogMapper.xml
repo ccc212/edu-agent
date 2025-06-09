@@ -15,6 +15,5 @@
             oper_time,
             execute_time
         from t_oper_log
-        order by id desc
     </select>
 </mapper>

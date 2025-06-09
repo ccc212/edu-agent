@@ -31,9 +31,7 @@ public class OperLogServiceImpl extends ServiceImpl<OperLogMapper, OperLog> impl
     @Transactional(readOnly = true)
     public IPage<OperLogVO> pageQuery(PageDTO pageDTO) {
         Page<OperLog> page = new Page<>(pageDTO.getPage(), pageDTO.getPageSize());
-//        IPage<OperLogVO> resultPage = operLogMapper.pageQuery(page, pageDTO);
-//        return resultPage;
-        return null;
+        return operLogMapper.pageQuery(page, pageDTO);
     }
 
     @Override

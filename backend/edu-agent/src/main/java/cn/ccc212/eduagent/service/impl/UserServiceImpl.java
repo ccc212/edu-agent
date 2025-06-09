@@ -225,13 +225,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Override
     public void batchInsert(List<AddUserDTO> addUserDTOS) {
         List<User> users = BeanUtil.copyToList(addUserDTOS, User.class);
+        Set<Integer> requestedRoleCodes = users.stream().map(User::getRoleCode).collect(Collectors.toSet());
+        Integer existingRoleCodesCount = roleMapper.findExistingRoleCodes(requestedRoleCodes);
+        if (existingRoleCodesCount != requestedRoleCodes.size()) {
+            throw new BizException(StatusCodeEnum.ROLE_NOT_EXISTS);
+        }
         // 默认密码为123456
         users.forEach(user -> user
                 .setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()))
                 .setDelFlag(false)
                 .setCreateTime(LocalDateTime.now())
                 .setUpdateTime(LocalDateTime.now())
-                .setLastLoginTime(LocalDateTime.now())
         );
         userMapper.batchInsert(users);
     }

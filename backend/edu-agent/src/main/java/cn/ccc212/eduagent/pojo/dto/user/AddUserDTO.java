@@ -13,6 +13,7 @@ import lombok.*;
 @Builder
 public class AddUserDTO extends BaseDTO {
 
+    @NotNull(message = "姓名不能为空")
     @Schema(example = "姓名")
     private String name;
 
@@ -20,6 +21,7 @@ public class AddUserDTO extends BaseDTO {
     @Schema(example = "账号")
     private String username;
 
+    @NotNull(message = "密码不能为空")
     @Schema(example = "2")
     private Integer roleCode;
 

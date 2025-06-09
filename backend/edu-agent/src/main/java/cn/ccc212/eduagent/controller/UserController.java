@@ -144,7 +144,7 @@ public class UserController {
     @RequireRoles({RoleConstant.ADMIN})
     @PostMapping("/batchInsert")
     @Operation(summary = "批量插入用户", description = "批量插入用户，需要携带token，管理员权限，密码默认123456")
-    public Result<?> batchInsert(@RequestBody List<AddUserDTO> addUserDTOS) {
+    public Result<?> batchInsert(@RequestBody @Valid List<AddUserDTO> addUserDTOS) {
         userService.batchInsert(addUserDTOS);
         return Result.success(MessageConstant.ADD_SUCCESS);
     }

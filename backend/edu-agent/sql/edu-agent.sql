@@ -53,7 +53,7 @@ VALUES (1, '管理员'),
 DROP TABLE IF EXISTS t_oper_log;
 CREATE TABLE t_oper_log
 (
-    `id`             bigint     NOT NULL AUTO_INCREMENT COMMENT '日志主键',
+    `oper_id`             bigint     NOT NULL AUTO_INCREMENT COMMENT '日志主键',
     `title`          varchar(50)         DEFAULT '' COMMENT '模块标题',
     `business_type`  varchar(20)         DEFAULT 'OTHER' COMMENT '业务类型',
     `method`         varchar(100)        DEFAULT '' COMMENT '方法名称',
