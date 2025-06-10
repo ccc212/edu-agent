@@ -1,19 +1,20 @@
-package cn.ccc212.eduagent.pojo.vo;
+package cn.ccc212.eduagent.pojo.vo.user;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserInfoVO implements Serializable {
+@Builder
+public class UserLoginVO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -26,17 +27,9 @@ public class UserInfoVO implements Serializable {
 
     private String studentId;
 
-    private String email;
-
     private Integer roleCode;
 
-    private Integer delFlag;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createTime;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime updateTime;
+    private String token;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastLoginTime;

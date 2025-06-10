@@ -1,7 +1,6 @@
 package cn.ccc212.eduagent.service.impl;
 
 import cn.ccc212.eduagent.config.properties.JwtProperties;
-import cn.ccc212.eduagent.constant.CommonConstant;
 import cn.ccc212.eduagent.constant.JwtClaimsConstant;
 import cn.ccc212.eduagent.constant.RoleConstant;
 import cn.ccc212.eduagent.context.AuthContext;
@@ -12,13 +11,12 @@ import cn.ccc212.eduagent.mapper.UserMapper;
 import cn.ccc212.eduagent.pojo.dto.user.*;
 import cn.ccc212.eduagent.pojo.entity.Role;
 import cn.ccc212.eduagent.pojo.entity.User;
-import cn.ccc212.eduagent.pojo.vo.UserInfoVO;
-import cn.ccc212.eduagent.pojo.vo.UserLoginVO;
+import cn.ccc212.eduagent.pojo.vo.user.UserInfoVO;
+import cn.ccc212.eduagent.pojo.vo.user.UserLoginVO;
 import cn.ccc212.eduagent.service.IUserService;
 import cn.ccc212.eduagent.utils.JwtUtil;
 import cn.ccc212.eduagent.utils.PageUtils;
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.DesensitizedUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -30,7 +28,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -163,7 +160,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
 
         if (updateUserDTO.getRoleCode() != null) {
-            if (!Objects.equals(AuthContext.getJwtClaims().get(JwtClaimsConstant.ROLE_CODE, Integer.class), RoleConstant.ADMIN)) {
+            if (!Objects.equals(AuthContext.getRoleCode(), RoleConstant.ADMIN)) {
                 throw new BizException("修改用户角色需管理员权限");
             }
 
@@ -212,7 +209,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Override
     public UserInfoVO getByUserId(Long id) {
-        if (!Objects.equals(AuthContext.getUserId(), id) && AuthContext.getJwtClaims().get(JwtClaimsConstant.ROLE_CODE, Integer.class) != RoleConstant.ADMIN) {
+        if (!Objects.equals(AuthContext.getUserId(), id) && AuthContext.getRoleCode() != RoleConstant.ADMIN) {
             throw new BizException("获取其他用户信息需要管理员权限");
         }
         User user = getById(id);

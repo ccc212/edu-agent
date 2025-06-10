@@ -1,4 +1,4 @@
-package cn.ccc212.eduagent.pojo.vo;
+package cn.ccc212.eduagent.pojo.vo.log;
 
 import lombok.Builder;
 import lombok.Data;

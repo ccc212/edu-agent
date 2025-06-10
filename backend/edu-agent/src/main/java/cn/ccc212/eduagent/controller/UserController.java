@@ -7,8 +7,8 @@ import cn.ccc212.eduagent.constant.RoleConstant;
 import cn.ccc212.eduagent.enums.BusinessTypeEnum;
 import cn.ccc212.eduagent.pojo.dto.user.*;
 import cn.ccc212.eduagent.pojo.entity.Result;
-import cn.ccc212.eduagent.pojo.vo.UserInfoVO;
-import cn.ccc212.eduagent.pojo.vo.UserLoginVO;
+import cn.ccc212.eduagent.pojo.vo.user.UserInfoVO;
+import cn.ccc212.eduagent.pojo.vo.user.UserLoginVO;
 import cn.ccc212.eduagent.service.IUserService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;
@@ -102,6 +102,7 @@ public class UserController {
      * @param newPassword 新密码
      * @return 修改成功信息
      */
+    @Log(title = "修改密码", businessType = BusinessTypeEnum.UPDATE)
     @PutMapping("/updatePassword")
     @Operation(summary = "修改密码", description = "修改密码，需要携带token，需要传入原密码进行校验，只能修改自己的密码")
     public Result<?> updatePassword(@RequestParam(required = false) @NotBlank(message = "旧密码不能为空") @Schema(example = "password") String oldPassword,
@@ -156,6 +157,7 @@ public class UserController {
      * @return 修改成功信息
      */
     @RequireRoles({RoleConstant.ADMIN})
+    @Log(title = "批量设置用户角色", businessType = BusinessTypeEnum.UPDATE)
     @PostMapping("/setRole")
     @Operation(summary = "批量设置用户角色", description = "设置用户角色，需要携带token，管理员权限；1为管理员，2为教师，3为学生，4为游客")
     public Result<?> setRoles(@RequestBody @Valid List<SetRoleDTO> setRoleDTOs) {

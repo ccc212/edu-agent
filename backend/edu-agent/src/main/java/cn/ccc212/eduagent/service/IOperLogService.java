@@ -2,7 +2,7 @@ package cn.ccc212.eduagent.service;
 
 import cn.ccc212.eduagent.pojo.dto.PageDTO;
 import cn.ccc212.eduagent.pojo.entity.OperLog;
-import cn.ccc212.eduagent.pojo.vo.OperLogVO;
+import cn.ccc212.eduagent.pojo.vo.log.OperLogVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 

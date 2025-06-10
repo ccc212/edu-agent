@@ -3,7 +3,7 @@ package cn.ccc212.eduagent.mapper;
 import cn.ccc212.eduagent.pojo.dto.user.SetRoleDTO;
 import cn.ccc212.eduagent.pojo.dto.user.UserPageDTO;
 import cn.ccc212.eduagent.pojo.entity.User;
-import cn.ccc212.eduagent.pojo.vo.UserInfoVO;
+import cn.ccc212.eduagent.pojo.vo.user.UserInfoVO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

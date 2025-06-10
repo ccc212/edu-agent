@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ccc212.eduagent.mapper.ClassMapper">
+
+    <select id="listClass" resultType="cn.ccc212.eduagent.pojo.vo.clazz.ClassListVO">
+        select
+            c.class_id,
+            c.class_name,
+            c.teacher_id,
+            c.description,
+            c.create_time,
+            c.update_time,
+            u.name as teacherName
+        from t_class c
+        left join t_user u on c.teacher_id = u.user_id
+        <where>
+            <if test="classPageDTO.classId != null">
+                and c.class_id = #{classPageDTO.classId}
+            </if>
+            <if test="classPageDTO.className != null and classPageDTO.className != ''">
+                and c.class_name like concat('%', #{classPageDTO.className}, '%')
+            </if>
+            <if test="classPageDTO.teacherId != null">
+                and c.teacher_id = #{classPageDTO.teacherId}
+            </if>
+            <if test="classPageDTO.description != null and classPageDTO.description != ''">
+                and c.description like concat('%', #{classPageDTO.description}, '%')
+            </if>
+            <if test="classPageDTO.createTimeStart != null and classPageDTO.createTimeEnd != null">
+                and c.create_time between #{classPageDTO.createTimeStart} and #{classPageDTO.createTimeEnd}
+            </if>
+        </where>
+        <if test="classPageDTO.orderByColumn != null and classPageDTO.orderByColumn != ''">
+            order by c.${classPageDTO.orderByColumn} ${classPageDTO.sortOrder}
+        </if>
+    </select>
+
+    <select id="listJoinedClass" resultType="cn.ccc212.eduagent.pojo.vo.clazz.ClassListVO">
+        select
+            c.class_id,
+            c.class_name,
+            c.teacher_id,
+            c.description,
+            c.create_time,
+            c.update_time,
+            u.name as teacherName
+        from t_student_class sc
+        left join t_class c on sc.class_id = c.class_id
+        left join t_user u on c.teacher_id = u.user_id
+        <where>
+            sc.student_id = #{userId}
+            <if test="classPageDTO.classId != null">
+                and c.class_id = #{classPageDTO.classId}
+            </if>
+            <if test="classPageDTO.className != null and classPageDTO.className != ''">
+                and c.class_name like concat('%', #{classPageDTO.className}, '%')
+            </if>
+            <if test="classPageDTO.teacherId != null">
+                and c.teacher_id = #{classPageDTO.teacherId}
+            </if>
+            <if test="classPageDTO.description != null and classPageDTO.description != ''">
+                and c.description like concat('%', #{classPageDTO.description}, '%')
+            </if>
+            <if test="classPageDTO.createTimeStart != null and classPageDTO.createTimeEnd != null">
+                and c.create_time between #{classPageDTO.createTimeStart} and #{classPageDTO.createTimeEnd}
+            </if>
+        </where>
+        <if test="classPageDTO.orderByColumn != null and classPageDTO.orderByColumn != ''">
+            order by c.${classPageDTO.orderByColumn} ${classPageDTO.sortOrder}
+        </if>
+    </select>
+
+    <select id="listOwnedClass" resultType="cn.ccc212.eduagent.pojo.vo.clazz.ClassListVO">
+        select
+            c.class_id,
+            c.class_name,
+            c.teacher_id,
+            c.description,
+            c.create_time,
+            c.update_time,
+            u.name as teacherName
+        from t_class c
+        left join t_user u on c.teacher_id = u.user_id
+        <where>
+            c.teacher_id = #{userId}
+            <if test="ownedClassPageDTO.classId != null">
+                and c.class_id = #{ownedClassPageDTO}
+            </if>
+            <if test="ownedClassPageDTO.className != null and ownedClassPageDTO.className != ''">
+                and c.class_name like concat('%', #{ownedClassPageDTO.className}, '%')
+            </if>
+            <if test="ownedClassPageDTO.description != null and ownedClassPageDTO.description != ''">
+                and c.description like concat('%', #{ownedClassPageDTO.description}, '%')
+            </if>
+            <if test="ownedClassPageDTO.createTimeStart != null and ownedClassPageDTO.createTimeEnd != null">
+                and c.create_time between #{ownedClassPageDTO.createTimeStart} and #{ownedClassPageDTO.createTimeEnd}
+            </if>
+        </where>
+        <if test="ownedClassPageDTO.orderByColumn != null and ownedClassPageDTO.orderByColumn != ''">
+            order by c.${ownedClassPageDTO.orderByColumn} ${ownedClassPageDTO.sortOrder}
+        </if>
+    </select>
+
+    <select id="listClassApply" resultType="cn.ccc212.eduagent.pojo.vo.clazz.StudentClassListVO">
+        select
+            sc.student_id,
+            sc.class_id,
+            sc.status,
+            sc.joined_at,
+            sc.create_time,
+            sc.update_time,
+            u.name as studentName,
+            c.class_name
+        from t_student_class sc
+        left join t_class c on sc.class_id = c.class_id
+        left join t_user u on sc.student_id = u.user_id
+        <where>
+            sc.class_id = #{classId}
+            <if test="studentClassPageDTO.createTimeStart != null and studentClassPageDTO.createTimeEnd != null">
+                and c.create_time between #{studentClassPageDTO.createTimeStart} and #{studentClassPageDTO.createTimeEnd}
+            </if>
+        </where>
+    </select>
+
+    <select id="listClassInvite" resultType="cn.ccc212.eduagent.pojo.vo.clazz.StudentClassListVO">
+        select
+            sc.student_id,
+            sc.class_id,
+            sc.status,
+            sc.joined_at,
+            sc.create_time,
+            sc.update_time,
+            u.name as studentName,
+            c.class_name
+        from t_student_class sc
+        left join t_class c on sc.class_id = c.class_id
+        left join t_user u on sc.student_id = u.user_id
+        <where>
+            sc.student_id = #{userId}
+            <if test="studentClassPageDTO.createTimeStart != null and studentClassPageDTO.createTimeEnd != null">
+                and c.create_time between #{studentClassPageDTO.createTimeStart} and #{studentClassPageDTO.createTimeEnd}
+            </if>
+        </where>
+    </select>
+
+    <select id="listStudentClassRelation" resultType="cn.ccc212.eduagent.pojo.vo.clazz.StudentClassListVO">
+        select
+        sc.student_id,
+        sc.class_id,
+        sc.status,
+        sc.joined_at,
+        sc.create_time,
+        sc.update_time,
+        u.name as studentName,
+        c.class_name
+        from t_student_class sc
+        left join t_class c on sc.class_id = c.class_id
+        left join t_user u on sc.student_id = u.user_id
+        <where>
+            <if test="listStudentClassDTO.studentId != null">
+                and sc.student_id = #{listStudentClassDTO.studentId}
+            </if>
+            <if test="listStudentClassDTO.classId != null">
+                and sc.class_id = #{listStudentClassDTO.classId}
+            </if>
+            <if test="listStudentClassDTO.status != null">
+                and sc.status = #{listStudentClassDTO.status}
+            </if>
+            <if test="listStudentClassDTO.createTimeStart != null and listStudentClassDTO.createTimeEnd != null">
+                and c.create_time between #{listStudentClassDTO.createTimeStart} and
+                #{listStudentClassDTO.createTimeEnd}
+            </if>
+        </where>
+        <if test="listStudentClassDTO.orderByColumn != null and listStudentClassDTO.orderByColumn != ''">
+            order by sc.${listStudentClassDTO.orderByColumn} ${listStudentClassDTO.sortOrder}
+        </if>
+    </select>
+</mapper>

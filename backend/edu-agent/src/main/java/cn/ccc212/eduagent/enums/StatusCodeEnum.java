@@ -30,6 +30,11 @@ public enum StatusCodeEnum {
     ROLE_NOT_EXISTS(-10201, "角色不存在"),
     NEED_ADMIN(-10202, "需管理员权限"),
 
+    // 班级相关
+    CLASS_EXIST(-10301, "班级已存在"),
+    CLASS_NOT_YOURS(-10302, "班级不属于当前用户"),
+    CLASS_NOT_EXISTS(-10303, "班级不存在"),
+
     // 其他
     PORT_OCCUPIED(-90001, "端口被占用"),
     TOO_MANY_REQUESTS(-90002, "访问过于频繁");

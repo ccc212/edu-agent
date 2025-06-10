@@ -7,7 +7,7 @@ import cn.ccc212.eduagent.constant.RoleConstant;
 import cn.ccc212.eduagent.enums.BusinessTypeEnum;
 import cn.ccc212.eduagent.pojo.dto.PageDTO;
 import cn.ccc212.eduagent.pojo.entity.Result;
-import cn.ccc212.eduagent.pojo.vo.OperLogVO;
+import cn.ccc212.eduagent.pojo.vo.log.OperLogVO;
 import cn.ccc212.eduagent.service.IOperLogService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import io.swagger.v3.oas.annotations.Operation;

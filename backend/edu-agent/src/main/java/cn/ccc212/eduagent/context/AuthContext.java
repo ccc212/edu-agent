@@ -26,4 +26,8 @@ public class AuthContext {
         return getJwtClaims().get(JwtClaimsConstant.USER_ID, Long.class);
     }
 
+    public static Integer getRoleCode() {
+        return getJwtClaims().get(JwtClaimsConstant.ROLE_CODE, Integer.class);
+    }
+
 }

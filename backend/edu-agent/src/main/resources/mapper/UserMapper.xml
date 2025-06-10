@@ -16,7 +16,7 @@
         </foreach>
     </update>
 
-    <select id="search" resultType="cn.ccc212.eduagent.pojo.vo.UserInfoVO">
+    <select id="search" resultType="cn.ccc212.eduagent.pojo.vo.user.UserInfoVO">
         select
         u.user_id,
         u.name,

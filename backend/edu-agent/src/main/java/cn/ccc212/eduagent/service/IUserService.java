@@ -2,13 +2,12 @@ package cn.ccc212.eduagent.service;
 
 import cn.ccc212.eduagent.pojo.dto.user.*;
 import cn.ccc212.eduagent.pojo.entity.User;
-import cn.ccc212.eduagent.pojo.vo.UserInfoVO;
-import cn.ccc212.eduagent.pojo.vo.UserLoginVO;
+import cn.ccc212.eduagent.pojo.vo.user.UserInfoVO;
+import cn.ccc212.eduagent.pojo.vo.user.UserLoginVO;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * <p>

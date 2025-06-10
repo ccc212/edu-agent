@@ -49,6 +49,40 @@ VALUES (1, '管理员'),
        (3, '学生'),
        (4, '游客');
 
+# 班级
+DROP TABLE IF EXISTS t_class;
+CREATE TABLE t_class
+(
+    `class_id`    BIGINT UNSIGNED                                                NOT NULL AUTO_INCREMENT COMMENT '班级主键',
+    `class_name`  VARCHAR(100)                                                   NOT NULL COMMENT '班级名称',
+    `teacher_id`  BIGINT UNSIGNED                                               NOT NULL COMMENT '班级所属教师ID',
+    `description` TEXT                                                           NULL COMMENT '班级描述',
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP                             NOT NULL COMMENT '创建时间',
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL COMMENT '修改时间',
+    PRIMARY KEY (`class_id`),
+    UNIQUE KEY `uk_class_name` (`class_name`),
+    KEY `idx_teacher_id` (`teacher_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci COMMENT ='班级信息表';
+
+# 学生-班级关联表
+DROP TABLE IF EXISTS t_student_class;
+CREATE TABLE t_student_class
+(
+    `student_id` BIGINT UNSIGNED                    NOT NULL COMMENT '学生ID',
+    `class_id`   BIGINT UNSIGNED                    NOT NULL COMMENT '班级ID',
+    `status`     INT DEFAULT 0 COMMENT '加入状态（0未加入 1已加入 2申请中 3邀请中）',
+    `joined_at`  DATETIME NULL COMMENT '加入班级的时间',
+    `create_time` DATETIME DEFAULT CURRENT_TIMESTAMP                             NOT NULL COMMENT '创建时间',
+    `update_time` DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL COMMENT '修改时间',
+    PRIMARY KEY (`student_id`, `class_id`),
+    KEY `idx_student_id` (`student_id`),
+    KEY `idx_class_id` (`class_id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci COMMENT ='学生与班级关联表';
+
 # 操作日志表
 DROP TABLE IF EXISTS t_oper_log;
 CREATE TABLE t_oper_log
@@ -68,6 +102,6 @@ CREATE TABLE t_oper_log
     `error_msg`      varchar(2000)       DEFAULT '' COMMENT '错误消息',
     `oper_time`      datetime            DEFAULT NULL COMMENT '操作时间',
     `execute_time`   bigint(20) NOT NULL DEFAULT '0' COMMENT '执行时长(毫秒)',
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`oper_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8 COMMENT ='操作日志记录';

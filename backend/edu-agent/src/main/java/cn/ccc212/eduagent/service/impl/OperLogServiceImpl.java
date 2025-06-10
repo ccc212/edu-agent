@@ -3,7 +3,7 @@ package cn.ccc212.eduagent.service.impl;
 import cn.ccc212.eduagent.mapper.OperLogMapper;
 import cn.ccc212.eduagent.pojo.dto.PageDTO;
 import cn.ccc212.eduagent.pojo.entity.OperLog;
-import cn.ccc212.eduagent.pojo.vo.OperLogVO;
+import cn.ccc212.eduagent.pojo.vo.log.OperLogVO;
 import cn.ccc212.eduagent.service.IOperLogService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;

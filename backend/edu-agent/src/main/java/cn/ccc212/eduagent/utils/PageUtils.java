@@ -1,6 +1,7 @@
 package cn.ccc212.eduagent.utils;
 
 import cn.ccc212.eduagent.pojo.dto.PageDTO;
+import cn.ccc212.eduagent.pojo.entity.StudentClass;
 import cn.ccc212.eduagent.pojo.entity.User;
 
 import java.util.*;
@@ -16,8 +17,22 @@ public class PageUtils {
         // User
         ALLOWED_SORT_COLUMNS_MAP.put(User.class,
                 new HashSet<>(Arrays.asList(
-                        "id", "name", "username", "role_code", "valid_start_time",
+                        "user_id", "name", "username", "role_code", "valid_start_time",
                         "valid_end_time", "del_flag", "create_time", "last_login_time"
+                ))
+        );
+
+        // Class
+        ALLOWED_SORT_COLUMNS_MAP.put(cn.ccc212.eduagent.pojo.entity.Class.class,
+                new HashSet<>(Arrays.asList(
+                        "class_id", "class_name", "teacher_id", "description", "create_time"
+                ))
+        );
+
+        // StudentClass
+        ALLOWED_SORT_COLUMNS_MAP.put(StudentClass.class,
+                new HashSet<>(Arrays.asList(
+                        "student_id", "class_id", "status"
                 ))
         );
 

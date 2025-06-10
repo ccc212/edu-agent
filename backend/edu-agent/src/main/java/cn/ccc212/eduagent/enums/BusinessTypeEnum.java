@@ -74,6 +74,31 @@ public enum BusinessTypeEnum {
     /**
      * 下载
      */
-    DOWNLOAD;
+    DOWNLOAD,
+
+    /**
+     * 申请
+     */
+    APPLY,
+
+    /**
+     * 邀请
+     */
+    INVITE,
+
+    /**
+     * 同意
+     */
+    APPROVE,
+
+    /**
+     * 拒绝
+     */
+    REJECT,
+
+    /**
+     * 退出
+     */
+    EXIT,
 
 }
