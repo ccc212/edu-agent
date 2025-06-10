@@ -36,4 +36,5 @@ public interface IUserService extends IService<User> {
 
     void setRoles(List<SetRoleDTO> setRoleDTOs);
 
+    void studentAuth(String studentId, String name);
 }

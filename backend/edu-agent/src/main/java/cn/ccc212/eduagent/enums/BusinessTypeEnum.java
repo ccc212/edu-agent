@@ -101,4 +101,9 @@ public enum BusinessTypeEnum {
      */
     EXIT,
 
+    /**
+     * 认证
+     */
+    AUTH,
+
 }

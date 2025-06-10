@@ -247,4 +247,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         userMapper.setRoles(setRoleDTOs);
     }
 
+    @Override
+    public void studentAuth(String studentId, String name) {
+        User user = lambdaQuery().eq(User::getStudentId, studentId).one();
+        if (user != null) {
+            throw new BizException(StatusCodeEnum.STUDENT_EXIST);
+        }
+        userMapper.update(new LambdaUpdateWrapper<User>()
+                .eq(User::getUserId, AuthContext.getUserId())
+                .set(User::getStudentId, studentId)
+                .set(User::getName, name)
+                .set(User::getRoleCode, RoleConstant.STUDENT));
+    }
+
 }

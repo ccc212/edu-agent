@@ -67,21 +67,21 @@ public class ClassController {
 
     @RequireRoles({RoleConstant.ADMIN, RoleConstant.TEACHER})
     @GetMapping("/list")
-    @Operation(summary = "查询班级（管理员）", description = "分页、条件查询所有班级")
+    @Operation(summary = "查询班级（管理员）", description = "分页、条件查询所有班级；可排序")
     public Result<IPage<ClassListVO>> listClassByAdmin(@Valid ClassPageDTO classPageDTO) {
         return Result.success(classService.listClassByAdmin(classPageDTO));
     }
 
     @RequireRoles({RoleConstant.STUDENT})
     @GetMapping("/joined")
-    @Operation(summary = "查询加入的班级", description = "分页、条件查询自己加入的班级；要求角色为学生")
+    @Operation(summary = "查询加入的班级", description = "分页、条件查询自己加入的班级；要求角色为学生；可排序")
     public Result<IPage<ClassListVO>> listJoinedClass(@Valid ClassPageDTO classPageDTO) {
         return Result.success(classService.listJoinedClass(classPageDTO));
     }
 
     @RequireRoles({RoleConstant.ADMIN, RoleConstant.TEACHER})
     @GetMapping("/owned")
-    @Operation(summary = "查询拥有的班级", description = "分页、条件查询自己拥有的班级；要求角色为教师或管理员")
+    @Operation(summary = "查询拥有的班级", description = "分页、条件查询自己拥有的班级；要求角色为教师或管理员；可排序")
     public Result<IPage<ClassListVO>> listOwnedClass(@Valid OwnedClassPageDTO ownedClassPageDTO) {
         return Result.success(classService.listOwnedClass(ownedClassPageDTO));
     }
@@ -168,7 +168,7 @@ public class ClassController {
 
     @RequireRoles({RoleConstant.ADMIN})
     @PostMapping("/student/list")
-    @Operation(summary = "查询学生与班级的关系", description = "查询学生与班级的关系；要求角色为管理员；状态有：0未加入 1已加入 2申请中 3邀请中")
+    @Operation(summary = "查询学生与班级的关系", description = "查询学生与班级的关系；要求角色为管理员；状态有：0未加入 1已加入 2申请中 3邀请中；可排序")
     public Result<IPage<StudentClassListVO>> listStudentClassRelation(@RequestBody ListStudentClassDTO listStudentClassDTO) {
         return Result.success(classService.listStudentClassRelation(listStudentClassDTO));
     }

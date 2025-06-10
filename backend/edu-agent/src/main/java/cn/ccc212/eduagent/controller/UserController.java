@@ -165,4 +165,22 @@ public class UserController {
         return Result.success(MessageConstant.UPDATE_SUCCESS);
     }
 
+    /**
+     * 学生认证
+     *
+     * @param studentId
+     * @return 认证成功信息
+     */
+    @RequireRoles(allowGuest = true)
+    @Log(title = "学生认证", businessType = BusinessTypeEnum.AUTH)
+    @PostMapping("/studentAuth")
+    @Operation(summary = "学生认证", description = "学生认证，要求角色为游客")
+    public Result<?> studentAuth(@RequestParam(required = false) @NotBlank(message = "学号不能为空") String studentId,
+                                 @RequestParam(required = false) @NotBlank(message = "姓名不能为空") String name) {
+        userService.studentAuth(studentId, name);
+        return Result.success(MessageConstant.OPERATION_SUCCESS);
+    }
+
+    // TODO 认证审核
+
 }

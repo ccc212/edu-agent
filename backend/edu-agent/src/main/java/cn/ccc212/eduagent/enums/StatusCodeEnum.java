@@ -34,6 +34,7 @@ public enum StatusCodeEnum {
     CLASS_EXIST(-10301, "班级已存在"),
     CLASS_NOT_YOURS(-10302, "班级不属于当前用户"),
     CLASS_NOT_EXISTS(-10303, "班级不存在"),
+    STUDENT_EXIST(-10304, "学生已存在"),
 
     // 其他
     PORT_OCCUPIED(-90001, "端口被占用"),
