@@ -1,14 +1,14 @@
-package cn.ccc212.eduagent.strategy.impl;
+package cn.ccc212.eduagent.strategy.log.impl;
 
 import cn.ccc212.eduagent.pojo.entity.OperLog;
 import cn.ccc212.eduagent.service.IOperLogService;
-import cn.ccc212.eduagent.strategy.LogStrategy;
+import cn.ccc212.eduagent.strategy.log.LogStrategy;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CompletableFuture;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class MultiThreadLogStrategyImpl implements LogStrategy {
 

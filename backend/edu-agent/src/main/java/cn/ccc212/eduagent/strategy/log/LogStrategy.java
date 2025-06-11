@@ -1,4 +1,4 @@
-package cn.ccc212.eduagent.strategy;
+package cn.ccc212.eduagent.strategy.log;
 
 
 import cn.ccc212.eduagent.pojo.entity.OperLog;

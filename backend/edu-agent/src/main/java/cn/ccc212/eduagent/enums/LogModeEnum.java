@@ -17,7 +17,7 @@ public enum LogModeEnum {
 
     public static String getStrategy(String mode) {
         for (LogModeEnum value : LogModeEnum.values()) {
-            if (value.getMode().equals(mode)) {
+            if (value.getMode().equalsIgnoreCase(mode)) {
                 return value.getStrategy();
             }
         }

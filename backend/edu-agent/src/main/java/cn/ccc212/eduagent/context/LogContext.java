@@ -2,15 +2,15 @@ package cn.ccc212.eduagent.context;
 
 import cn.ccc212.eduagent.enums.LogModeEnum;
 import cn.ccc212.eduagent.pojo.entity.OperLog;
-import cn.ccc212.eduagent.strategy.LogStrategy;
+import cn.ccc212.eduagent.strategy.log.LogStrategy;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-@Service
+@Component
 @RequiredArgsConstructor
 public class LogContext {
 
@@ -18,6 +18,19 @@ public class LogContext {
     private String logMode;
 
     private final Map<String, LogStrategy> logStrategyMap;
+
+    private LogStrategy getLogStrategy() {
+        String strategyBeanName = LogModeEnum.getStrategy(logMode);
+        if (strategyBeanName == null) {
+            throw new IllegalStateException("Unknown cache mode: " + logMode);
+        }
+
+        LogStrategy strategy = logStrategyMap.get(strategyBeanName);
+        if (strategy == null) {
+            throw new IllegalStateException("Cache strategy bean not found for mode: " + logMode + ", bean name: " + strategyBeanName);
+        }
+        return strategy;
+    }
 
     public void log(OperLog operLog) {
         String jsonResult = operLog.getJsonResult();
@@ -42,6 +55,6 @@ public class LogContext {
         }
 
         // 调用对应的日志策略
-        logStrategyMap.get(LogModeEnum.getStrategy(logMode)).log(operLog);
+        getLogStrategy().log(operLog);
     }
 }
