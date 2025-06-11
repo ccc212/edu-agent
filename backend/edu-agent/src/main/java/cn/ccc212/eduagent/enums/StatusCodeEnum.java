@@ -25,6 +25,7 @@ public enum StatusCodeEnum {
     LOGIN_FAILED(-10107, "登录失败"),
     USER_NOT_FOUND(-10108, "用户不存在"),
     CREATE_TIME_START_AFTER_END(-10109, "创建时间起始不能在创建时间结束之后"),
+    EMAIL_EXIST(-10110, "邮箱已存在"),
 
     // 角色相关
     ROLE_NOT_EXISTS(-10201, "角色不存在"),

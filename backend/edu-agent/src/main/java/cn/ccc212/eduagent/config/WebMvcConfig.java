@@ -30,7 +30,13 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     protected void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/user/login", "/user/register", "/v3/api-docs");
+                .excludePathPatterns(
+                        "/user/login",
+                        "/user/register",
+                        "/user/checkUsername/*",
+                        "/user/checkEmail/*",
+                        "/v3/api-docs"
+                );
     }
 
     /**

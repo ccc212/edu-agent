@@ -260,4 +260,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 .set(User::getRoleCode, RoleConstant.STUDENT));
     }
 
+    @Override
+    public void checkUsername(String username) {
+        if (lambdaQuery().eq(User::getUsername, username).one() != null) {
+            throw new BizException(StatusCodeEnum.USERNAME_EXIST);
+        }
+    }
+
+    @Override
+    public void checkEmail(String email) {
+        if (lambdaQuery().eq(User::getEmail, email).one() != null) {
+            throw new BizException(StatusCodeEnum.EMAIL_EXIST);
+        }
+    }
+
 }

@@ -92,7 +92,7 @@ public class ClassController {
     @Operation(summary = "申请加入班级", description = "学生申请加入班级；要求角色为学生")
     public Result<?> applyJoinClass(@RequestParam @NotNull(message = "班级ID不能为空") @Schema(example = "1") Long classId) {
         classService.applyJoinClass(classId);
-        return Result.success(MessageConstant.OPERATION_SUCCESS);
+        return Result.success();
     }
 
     @RequireRoles({RoleConstant.ADMIN, RoleConstant.TEACHER})
@@ -102,7 +102,7 @@ public class ClassController {
     public Result<?> inviteJoinClass(@RequestParam @NotNull(message = "班级ID不能为空") @Schema(example = "1") Long classId,
                                     @RequestParam @NotNull(message = "学生ID不能为空") @Schema(example = "1") Long studentId) {
         classService.inviteJoinClass(classId, studentId);
-        return Result.success(MessageConstant.OPERATION_SUCCESS);
+        return Result.success();
     }
 
     @RequireRoles({RoleConstant.ADMIN, RoleConstant.TEACHER})
@@ -112,7 +112,7 @@ public class ClassController {
     public Result<?> approveJoinClass(@RequestParam @NotNull(message = "班级ID不能为空") @Schema(example = "1") Long classId,
                                       @RequestParam @NotNull(message = "学生ID不能为空") @Schema(example = "1") Long studentId) {
         classService.approveJoinClass(classId, studentId);
-        return Result.success(MessageConstant.OPERATION_SUCCESS);
+        return Result.success();
     }
 
     @RequireRoles({RoleConstant.ADMIN, RoleConstant.TEACHER})
@@ -122,7 +122,7 @@ public class ClassController {
     public Result<?> rejectJoinClass(@RequestParam @NotNull(message = "班级ID不能为空") @Schema(example = "1") Long classId,
                                      @RequestParam @NotNull(message = "学生ID不能为空") @Schema(example = "1") Long studentId) {
         classService.rejectJoinClass(classId, studentId);
-        return Result.success(MessageConstant.OPERATION_SUCCESS);
+        return Result.success();
     }
 
     @RequireRoles({RoleConstant.STUDENT})
@@ -131,7 +131,7 @@ public class ClassController {
     @Operation(summary = "学生同意班级邀请", description = "学生同意班级邀请；要求角色为学生")
     public Result<?> studentApproveJoinClass(@RequestParam @NotNull(message = "班级ID不能为空") @Schema(example = "1") Long classId) {
         classService.studentApproveJoinClass(classId);
-        return Result.success(MessageConstant.OPERATION_SUCCESS);
+        return Result.success();
     }
 
     @RequireRoles({RoleConstant.STUDENT})
@@ -140,7 +140,7 @@ public class ClassController {
     @Operation(summary = "学生拒绝班级邀请", description = "学生拒绝班级邀请；要求角色为学生")
     public Result<?> studentRejectJoinClass(@RequestParam @NotNull(message = "班级ID不能为空") @Schema(example = "1") Long classId) {
         classService.studentRejectJoinClass(classId);
-        return Result.success(MessageConstant.OPERATION_SUCCESS);
+        return Result.success();
     }
 
     @RequireRoles({RoleConstant.STUDENT})
@@ -149,7 +149,7 @@ public class ClassController {
     @Operation(summary = "退出班级", description = "学生退出班级；要求角色为学生")
     public Result<?> exitClass(@RequestParam @NotNull(message = "班级ID不能为空") @Schema(example = "1") Long classId) {
         classService.exitClass(classId);
-        return Result.success(MessageConstant.OPERATION_SUCCESS);
+        return Result.success();
     }
 
     @RequireRoles({RoleConstant.ADMIN, RoleConstant.TEACHER})

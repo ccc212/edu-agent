@@ -61,7 +61,7 @@ public class UserController {
      */
     @Log(title = "用户注册", businessType = BusinessTypeEnum.REGISTER)
     @PostMapping("/register")
-    @Operation(summary = "用户注册", description = "用户名是唯一的，如果碰到重复的用户名，后端会提示用户名已存在，默认角色为游客")
+    @Operation(summary = "用户注册", description = "用户名和邮箱是唯一的，如果碰到重复的用户名，后端会提示用户名已存在，默认角色为游客")
     public Result<?> register(@RequestBody @Valid UserRegisterDTO userRegisterDTO) {
         userService.register(userRegisterDTO);
         return Result.success(MessageConstant.REGISTER_SUCCESS);
@@ -178,9 +178,35 @@ public class UserController {
     public Result<?> studentAuth(@RequestParam(required = false) @NotBlank(message = "学号不能为空") String studentId,
                                  @RequestParam(required = false) @NotBlank(message = "姓名不能为空") String name) {
         userService.studentAuth(studentId, name);
-        return Result.success(MessageConstant.OPERATION_SUCCESS);
+        return Result.success();
     }
 
     // TODO 认证审核
+
+    /**
+     * 检查用户名是否存在
+     * 
+     * @param username
+     * @return 操作成功信息
+     */
+    @GetMapping("/checkUsername/{username}")
+    @Operation(summary = "检查用户名是否存在", description = "检查用户名是否存在")
+    public Result<?> checkUsername(@PathVariable("username") String username) {
+        userService.checkUsername(username);
+        return Result.success();
+    }
+
+    /**
+     * 检查邮箱是否存在
+     *
+     * @param email
+     * @return 操作成功信息
+     */
+    @GetMapping("/checkEmail/{email}")
+    @Operation(summary = "检查邮箱是否存在", description = "检查邮箱是否存在")
+    public Result<?> checkEmail(@PathVariable("email") String email) {
+        userService.checkEmail(email);
+        return Result.success();
+    }
 
 }
