@@ -35,6 +35,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                         "/user/register",
                         "/user/checkUsername/*",
                         "/user/checkEmail/*",
+                        "/user/sendEmail/*",
                         "/v3/api-docs"
                 );
     }

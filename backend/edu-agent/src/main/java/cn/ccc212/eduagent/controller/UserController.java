@@ -175,8 +175,8 @@ public class UserController {
     @Log(title = "学生认证", businessType = BusinessTypeEnum.AUTH)
     @PostMapping("/studentAuth")
     @Operation(summary = "学生认证", description = "学生认证，要求角色为游客")
-    public Result<?> studentAuth(@RequestParam(required = false) @NotBlank(message = "学号不能为空") String studentId,
-                                 @RequestParam(required = false) @NotBlank(message = "姓名不能为空") String name) {
+    public Result<?> studentAuth(@RequestParam(required = false) @NotBlank(message = "学号不能为空") @Schema(example = "202200000000") String studentId,
+                                 @RequestParam(required = false) @NotBlank(message = "姓名不能为空") @Schema(example = "张三") String name) {
         userService.studentAuth(studentId, name);
         return Result.success();
     }
@@ -185,13 +185,13 @@ public class UserController {
 
     /**
      * 检查用户名是否存在
-     * 
+     *
      * @param username
      * @return 操作成功信息
      */
     @GetMapping("/checkUsername/{username}")
     @Operation(summary = "检查用户名是否存在", description = "检查用户名是否存在")
-    public Result<?> checkUsername(@PathVariable("username") String username) {
+    public Result<?> checkUsername(@PathVariable("username") @Schema(example = "admin") String username) {
         userService.checkUsername(username);
         return Result.success();
     }
@@ -204,9 +204,18 @@ public class UserController {
      */
     @GetMapping("/checkEmail/{email}")
     @Operation(summary = "检查邮箱是否存在", description = "检查邮箱是否存在")
-    public Result<?> checkEmail(@PathVariable("email") String email) {
+    public Result<?> checkEmail(@PathVariable("email") @Schema(example = "example@example.com") String email) {
         userService.checkEmail(email);
         return Result.success();
+    }
+
+    /**
+     * 获取邮箱验证码
+     */
+    @GetMapping(value = "/sendEmail/{email}")
+    @Operation(summary = "获取邮箱验证码", description = "获取邮箱验证码")
+    public Result<?> sendCode(@PathVariable @Schema(example = "example@example.com") String email) {
+        return Result.success(userService.sendCode(email));
     }
 
 }

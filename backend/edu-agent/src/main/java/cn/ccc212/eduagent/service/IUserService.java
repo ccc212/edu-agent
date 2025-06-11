@@ -41,4 +41,6 @@ public interface IUserService extends IService<User> {
     void checkUsername(String username);
 
     void checkEmail(String email);
+
+    String sendCode(String email);
 }

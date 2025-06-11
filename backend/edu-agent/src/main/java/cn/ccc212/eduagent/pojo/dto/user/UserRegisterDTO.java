@@ -7,10 +7,7 @@ import lombok.*;
 
 
 @Getter
-@Setter
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class UserRegisterDTO extends BaseDTO {
 
     @NotBlank(message = "用户名不能为空")
@@ -20,5 +17,13 @@ public class UserRegisterDTO extends BaseDTO {
     @NotBlank(message = "密码不能为空")
     @Schema(example = "password")
     private String password;
+
+    @NotBlank(message = "邮箱不能为空")
+    @Schema(example = "example@example.com")
+    private String email;
+
+    @NotBlank(message = "验证码不能为空")
+    @Schema(example = "验证码")
+    private String code;
 
 }

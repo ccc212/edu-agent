@@ -6,6 +6,8 @@ server:
 spring:
   application:
     name: edu-agent
+  profiles:
+    active: local
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/edu_agent?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
@@ -22,11 +24,38 @@ spring:
       max-active: 20
       # 获取连接时最大等待时间，单位毫秒
       max-wait: 60000
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password:
+      database: 5
   rabbitmq:
     host: localhost
     port: 5672
     username: guest
     password: guest
+  # 邮件配置
+  mail:
+    # 发送者邮箱
+    username:
+    #申请到的授权码
+    password:
+    # 配置 SMTP 服务器地址
+    host: smtp.qq.com
+    # 端口号465或587
+    port: 465
+    protocol: smtps
+    # 默认的邮件编码为UTF-8
+    default-encoding: UTF-8
+    # 配置SSL 加密工厂
+    properties:
+      mail:
+        smtp:
+          socketFactoryClass: javax.net.ssl.SSLSocketFactory
+          #表示开启 DEBUG 模式，这样，邮件发送过程的日志会在控制台打印出来，方便排查错误
+          debug: true
+          ssl: true
 
 mybatis-plus:
   type-aliases-package: cn.ccc212.eduagen.pojo.entity
@@ -57,4 +86,6 @@ edu-agent:
     mode: multi-thread # multi-thread-多线程 rabbitmq-消息队列
     autolog:
       enable: true
+  cache:
+    mode: memory # redis-redis中间件 memory-本地内存
 

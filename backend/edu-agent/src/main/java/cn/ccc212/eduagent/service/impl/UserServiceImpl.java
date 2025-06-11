@@ -4,6 +4,7 @@ import cn.ccc212.eduagent.config.properties.JwtProperties;
 import cn.ccc212.eduagent.constant.JwtClaimsConstant;
 import cn.ccc212.eduagent.constant.RoleConstant;
 import cn.ccc212.eduagent.context.AuthContext;
+import cn.ccc212.eduagent.context.CacheContext;
 import cn.ccc212.eduagent.enums.StatusCodeEnum;
 import cn.ccc212.eduagent.exception.BizException;
 import cn.ccc212.eduagent.mapper.RoleMapper;
@@ -15,6 +16,7 @@ import cn.ccc212.eduagent.pojo.vo.user.UserInfoVO;
 import cn.ccc212.eduagent.pojo.vo.user.UserLoginVO;
 import cn.ccc212.eduagent.service.IUserService;
 import cn.ccc212.eduagent.utils.JwtUtil;
+import cn.ccc212.eduagent.utils.MailUtil;
 import cn.ccc212.eduagent.utils.PageUtils;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -24,6 +26,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.jsonwebtoken.Claims;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
@@ -47,6 +50,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     private final UserMapper userMapper;
     private final RoleMapper roleMapper;
     private final JwtProperties jwtProperties;
+    private final CacheContext cacheContext;
+    private final MailUtil mailUtil;
 
     @Override
     @Transactional
@@ -107,10 +112,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Transactional
     public Long register(UserRegisterDTO userRegisterDTO) {
         String username = userRegisterDTO.getUsername();
-        User existUser = lambdaQuery().eq(User::getUsername, username).one();
+        checkUsername(username);
 
-        if (existUser != null) {
-            throw new BizException(StatusCodeEnum.USERNAME_EXIST);
+        String email = userRegisterDTO.getEmail();
+        checkEmail(email);
+
+        String emailCode = userRegisterDTO.getCode();
+        String cacheEmailCode = cacheContext.get("edu-agent:email:" + email);
+
+        if (cacheEmailCode == null) {
+            throw new BizException(StatusCodeEnum.EMAIL_CODE_NOT_EXIST);
+        }
+
+        if (!emailCode.equals(cacheEmailCode)) {
+            throw new BizException(StatusCodeEnum.EMAIL_CODE_ERROR);
         }
 
         // 默认名字为用户名，角色为普通用户
@@ -118,10 +133,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 .setName(username)
                 .setUsername(username)
                 .setPassword(DigestUtils.md5DigestAsHex(userRegisterDTO.getPassword().getBytes()))
-                .setRoleCode(RoleConstant.GUEST)
-                .setLastLoginTime(LocalDateTime.now());
+                .setRoleCode(RoleConstant.GUEST);
 
         save(user);
+
+        cacheContext.delete("edu-agent:email:" + email);
 
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.USER_ID, user.getUserId());
@@ -272,6 +288,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         if (lambdaQuery().eq(User::getEmail, email).one() != null) {
             throw new BizException(StatusCodeEnum.EMAIL_EXIST);
         }
+    }
+
+    @Override
+    public String sendCode(String email) {
+        String code = cacheContext.get("edu-agent:email:" + email);
+        if (!StringUtils.isEmpty(code)) {
+            return email + "验证码已存在，还未过期";
+        }
+        boolean isSuccess = mailUtil.mail(email);
+        if (isSuccess) {
+            return "验证码发送成功";
+        }
+        throw new BizException("邮箱不正确或为空");
     }
 
 }
