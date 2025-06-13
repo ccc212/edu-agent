@@ -3,7 +3,6 @@ package cn.ccc212.eduagent.pojo.dto.clazz;
 import cn.ccc212.eduagent.pojo.dto.PageDTO;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;

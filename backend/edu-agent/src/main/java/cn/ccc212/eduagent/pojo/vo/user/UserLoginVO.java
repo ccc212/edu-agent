@@ -1,6 +1,5 @@
 package cn.ccc212.eduagent.pojo.vo.user;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,7 +30,6 @@ public class UserLoginVO implements Serializable {
 
     private String token;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastLoginTime;
 
 }

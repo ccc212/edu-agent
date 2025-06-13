@@ -1,7 +1,6 @@
 package cn.ccc212.eduagent.pojo.dto.clazz;
 
 import cn.ccc212.eduagent.pojo.dto.PageDTO;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +17,6 @@ public class StudentClassPageDTO extends PageDTO {
      */
     @Schema(example = "2022-01-01 00:00:00")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTimeStart;
 
     /**
@@ -26,7 +24,6 @@ public class StudentClassPageDTO extends PageDTO {
      */
     @Schema(example = "2032-01-01 00:00:00")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTimeEnd;
 
     @Override
