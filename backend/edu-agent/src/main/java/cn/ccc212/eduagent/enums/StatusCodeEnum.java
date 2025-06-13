@@ -39,6 +39,9 @@ public enum StatusCodeEnum {
     CLASS_NOT_EXISTS(-10303, "班级不存在"),
     STUDENT_EXIST(-10304, "学生已存在"),
 
+    // 判题相关
+    API_REQUEST_ERROR(-10401, "API请求错误"),
+
     // 其他
     PORT_OCCUPIED(-90001, "端口被占用"),
     TOO_MANY_REQUESTS(-90002, "访问过于频繁");
