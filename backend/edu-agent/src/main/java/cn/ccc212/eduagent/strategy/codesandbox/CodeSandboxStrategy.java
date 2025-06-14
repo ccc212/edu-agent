@@ -1,15 +1,14 @@
-package cn.ccc212.eduagent.judge.codesandbox;
+
+package cn.ccc212.eduagent.strategy.codesandbox;
 
 import cn.ccc212.eduagent.pojo.entity.codesandbox.ExecuteCodeRequest;
 import cn.ccc212.eduagent.pojo.entity.codesandbox.ExecuteCodeResponse;
 
-/**
- * 代码沙箱接口定义
- */
-public interface CodeSandbox {
+public interface CodeSandboxStrategy {
 
     /**
      * 执行代码
+     *
      * @param executeCodeRequest
      * @return
      */

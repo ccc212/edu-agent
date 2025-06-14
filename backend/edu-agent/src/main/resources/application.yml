@@ -92,4 +92,6 @@ edu-agent:
 # 代码沙箱配置
 codesandbox:
   mode: remote
+  host: localhost
+  port: 8858
 
