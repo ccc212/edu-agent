@@ -41,6 +41,7 @@ public enum StatusCodeEnum {
 
     // 判题相关
     API_REQUEST_ERROR(-10401, "API请求错误"),
+    LANGUAGE_NOT_SUPPORT(-10402, "语言不支持"),
 
     // 其他
     PORT_OCCUPIED(-90001, "端口被占用"),

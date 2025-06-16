@@ -1,7 +1,6 @@
 package cn.ccc212.eduagent.config;
 
 import cn.ccc212.eduagent.interceptor.JwtInterceptor;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +21,6 @@ import java.util.List;
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     private final JwtInterceptor jwtInterceptor;
-    private final ObjectMapper objectMapper;
 
     /**
      * 注册自定义拦截器
@@ -39,7 +37,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
                         "/user/checkEmail/*",
                         "/user/sendEmail/*",
                         "/v3/api-docs/**",
-                        "/judge/test"
+                        "/judge/testJava"
                 );
     }
 
