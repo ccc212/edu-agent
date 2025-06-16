@@ -43,4 +43,6 @@ public interface IUserService extends IService<User> {
     void checkEmail(String email);
 
     String sendCode(String email);
+
+    void resetPassword(ResetPasswordDTO resetPasswordDTO);
 }

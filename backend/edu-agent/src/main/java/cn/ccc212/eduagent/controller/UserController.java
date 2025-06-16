@@ -211,11 +211,27 @@ public class UserController {
 
     /**
      * 获取邮箱验证码
+     *
+     * @param email 邮箱
+     * @return 操作成功信息
      */
     @GetMapping(value = "/sendEmail/{email}")
     @Operation(summary = "获取邮箱验证码", description = "获取邮箱验证码")
     public Result<?> sendCode(@PathVariable @Schema(example = "example@example.com") String email) {
         return Result.success(userService.sendCode(email));
     }
+
+    /**
+     * 重置密码
+     *
+     * @param resetPasswordDTO
+     */
+    @PutMapping("/resetPassword")
+    @Operation(summary = "重置密码", description = "先调用获取邮箱验证码接口再调用")
+    public Result<?> resetPassword(@RequestBody @Valid ResetPasswordDTO resetPasswordDTO) {
+        userService.resetPassword(resetPasswordDTO);
+        return Result.success();
+    }
+
 
 }

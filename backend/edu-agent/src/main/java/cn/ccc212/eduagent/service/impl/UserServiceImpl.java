@@ -185,6 +185,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             }
         }
 
+        if (updateUserDTO.getStudentId() != null) {
+            if (!Objects.equals(AuthContext.getRoleCode(), RoleConstant.ADMIN)) {
+                throw new BizException("修改学号需管理员权限");
+            }
+
+            if (lambdaQuery().eq(User::getStudentId, updateUserDTO.getStudentId()).one() != null) {
+                throw new BizException(StatusCodeEnum.STUDENT_EXIST);
+            }
+        }
+
         User user = BeanUtil.copyProperties(updateUserDTO, User.class);
         updateById(user);
     }
@@ -301,6 +311,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
             return "验证码发送成功";
         }
         throw new BizException("邮箱不正确或为空");
+    }
+
+    @Override
+    public void resetPassword(ResetPasswordDTO resetPasswordDTO) {
+        String email = resetPasswordDTO.getEmail();
+        checkEmail(email);
+
+        String emailCode = resetPasswordDTO.getCode();
+        String cacheEmailCode = cacheContext.get("edu-agent:email:" + email);
+
+        if (cacheEmailCode == null) {
+            throw new BizException(StatusCodeEnum.EMAIL_CODE_NOT_EXIST);
+        }
+
+        if (!emailCode.equals(cacheEmailCode)) {
+            throw new BizException(StatusCodeEnum.EMAIL_CODE_ERROR);
+        }
+
+        update(new LambdaUpdateWrapper<User>()
+                .eq(User::getEmail, email)
+                .set(User::getPassword, DigestUtils.md5DigestAsHex(resetPasswordDTO.getNewPassword().getBytes())));
+
+        cacheContext.delete("edu-agent:email:" + email);
     }
 
 }
