@@ -15,5 +15,6 @@
             oper_time,
             execute_time
         from t_oper_log
+        where business_type != 'CHAT'
     </select>
 </mapper>

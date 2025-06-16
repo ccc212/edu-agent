@@ -32,7 +32,7 @@ public class JudgeController {
 
     @PostMapping("/testJava")
     @Operation(summary = "Java代码运行测试", description = "默认输入两参数 1 和 2")
-    public String test(@RequestBody @Valid TestJavaDTO testJavaDTO) {
+    public ExecuteCodeResponse test(@RequestBody @Valid TestJavaDTO testJavaDTO) {
         // 调用沙箱，获取到执行结果
         QuestionSubmitLanguageEnum languageEnum = QuestionSubmitLanguageEnum.getEnumByValue(testJavaDTO.getLanguage());
         if (languageEnum == null) {
@@ -48,8 +48,7 @@ public class JudgeController {
                 .setCode(testJavaDTO.getCode())
                 .setLanguage(Objects.requireNonNull(languageEnum).getValue())
                 .setInputList(inputList);
-        ExecuteCodeResponse executeCodeResponse = codeSandboxContext.executeCode(executeCodeRequest);
-        return executeCodeResponse.toString();
+        return codeSandboxContext.executeCode(executeCodeRequest);
     }
 
 }

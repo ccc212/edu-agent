@@ -69,18 +69,18 @@
 		<!--</dependency>-->
 
 		<!-- Spring AI Alibaba -->
-		<!--<dependency>-->
-		<!--	<groupId>com.alibaba.cloud.ai</groupId>-->
-		<!--	<artifactId>spring-ai-alibaba-starter</artifactId>-->
-		<!--	<version>1.0.0-M6.1</version>-->
-		<!--</dependency>-->
+		<dependency>
+			<groupId>com.alibaba.cloud.ai</groupId>
+			<artifactId>spring-ai-alibaba-starter</artifactId>
+			<version>1.0.0-M6.1</version>
+		</dependency>
 
 		<!-- 阿里云百炼，灵积大模型服务 -->
-		<!--<dependency>-->
-		<!--	<groupId>com.alibaba</groupId>-->
-		<!--	<artifactId>dashscope-sdk-java</artifactId>-->
-		<!--	<version>2.19.1</version>-->
-		<!--</dependency>-->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dashscope-sdk-java</artifactId>
+			<version>2.19.1</version>
+		</dependency>
 
 		<!-- https://java2ai.com/docs/1.0.0-M6.1/models/ollama -->
 		<!--<dependency>-->
@@ -97,18 +97,11 @@
 		<!--</dependency>-->
 
 		<!-- 支持文件会话记忆持久化的序列化 -->
-		<!--<dependency>-->
-		<!--	<groupId>com.esotericsoftware</groupId>-->
-		<!--	<artifactId>kryo</artifactId>-->
-		<!--	<version>5.6.2</version>-->
-		<!--</dependency>-->
-
-		<!-- 用于加载 .env 文件中的环境变量 -->
-		<!--<dependency>-->
-		<!--	<groupId>io.github.cdimascio</groupId>-->
-		<!--	<artifactId>dotenv-java</artifactId>-->
-		<!--	<version>3.2.0</version>-->
-		<!--</dependency>-->
+		<dependency>
+			<groupId>com.esotericsoftware</groupId>
+			<artifactId>kryo</artifactId>
+			<version>5.6.2</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>

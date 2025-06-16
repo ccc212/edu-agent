@@ -56,6 +56,19 @@ spring:
           #表示开启 DEBUG 模式，这样，邮件发送过程的日志会在控制台打印出来，方便排查错误
           debug: true
           ssl: true
+  ai:
+    dashscope:
+      api-key: your-api-key
+      chat:
+        options:
+          model: qwen-plus
+    zhipuai:
+      api-key: your-api-key
+      base-url: https://open.bigmodel.cn/api/paas
+      chat:
+        options:
+          model: glm-4-flash
+          temperature: 0.7 # 用于控制大型语言模型生成文本的随机性或创造性，值越高输出越多样和有创意但可能不准确，值越低输出越确定和保守但可能缺乏变化
 
 mybatis-plus:
   type-aliases-package: cn.ccc212.eduagen.pojo.entity
@@ -94,4 +107,7 @@ codesandbox:
   mode: remote
   host: localhost
   port: 8858
+
+ai:
+  mode: zhipu
 

@@ -106,4 +106,9 @@ public enum BusinessTypeEnum {
      */
     AUTH,
 
+    /**
+     * 聊天
+     */
+    CHAT,
+
 }
