@@ -28,4 +28,8 @@ public interface UserMapper extends BaseMapper<User> {
     void batchInsert(List<User> users);
 
     void setRoles(List<SetRoleDTO> setRoleDTOs);
+
+    Long getDaylyUsageCount(Integer roleCode);
+
+    Long getWeeklyUsageCount(Integer roleCode);
 }

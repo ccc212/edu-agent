@@ -60,6 +60,20 @@
         </if>
     </select>
 
+    <select id="getDaylyUsageCount" resultType="java.lang.Long">
+        select count(*)
+        from t_user
+        where last_login_time >= curdate()
+        and role_code = #{roleCode}
+    </select>
+
+    <select id="getWeeklyUsageCount" resultType="java.lang.Long">
+        select count(*)
+        from t_user
+        where yearweek(last_login_time, 1) = yearweek(curdate(), 1) # 1表示一周从周一开始，0表示周从周日开始
+        and role_code = #{roleCode}
+    </select>
+
     <insert id="batchInsert" parameterType="java.util.List">
         insert into t_user
         (
