@@ -37,5 +37,8 @@ public class AIContext {
         return getAIStrategy().chat(chatDTO, systemPrompt);
     }
 
+    public ChatVO chatWithRAG(ChatDTO chatDTO, String systemPrompt) {
+        return getAIStrategy().chatWithRAG(chatDTO, systemPrompt);
+    }
 
 }

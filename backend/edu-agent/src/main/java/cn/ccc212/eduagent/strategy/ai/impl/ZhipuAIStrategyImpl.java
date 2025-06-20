@@ -9,8 +9,10 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
+import org.springframework.ai.chat.client.advisor.QuestionAnswerAdvisor;
 import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -24,6 +26,7 @@ public class ZhipuAIStrategyImpl implements AIStrategy {
 
     private final ChatModel zhiPuAiChatModel;
     private final ChatMemory inMemoryChatMemory;
+    private final VectorStore eduAgentVectorStore;
 
     @Override
     public ChatVO chat(ChatDTO chatDTO, String systemPrompt) {
@@ -52,6 +55,37 @@ public class ZhipuAIStrategyImpl implements AIStrategy {
                         .call()
                         .content()
                 )
+                .setChatId(finalChatId);
+    }
+
+    @Override
+    public ChatVO chatWithRAG(ChatDTO chatDTO, String systemPrompt) {
+        ChatClient chatClient = ChatClient.builder(zhiPuAiChatModel)
+                .defaultSystem(systemPrompt)
+                .defaultAdvisors(
+                        new MessageChatMemoryAdvisor(inMemoryChatMemory)
+                        // 自定义推理增强 Advisor，可按需开启
+                        , new ReReadingAdvisor()
+                )
+                .build();
+
+        String chatId = chatDTO.getChatId();
+        if (StringUtils.isBlank(chatId)) {
+            chatId = UUID.randomUUID().toString();
+        }
+
+        String finalChatId = chatId;
+        return new ChatVO().setResponse(chatClient
+                        .prompt()
+                        .user(chatDTO.getContent())
+                        .advisors(spec -> spec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, finalChatId)
+                                .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
+                        // 开启日志，便于观察效果
+                        .advisors(new MyLoggerAdvisor())
+                        // 应用 RAG 知识库问答
+                        .advisors(new QuestionAnswerAdvisor(eduAgentVectorStore))
+                        .call()
+                        .content())
                 .setChatId(finalChatId);
     }
 

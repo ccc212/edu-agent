@@ -29,4 +29,12 @@ public class AIController {
     public Result<ChatVO> chat(@RequestBody ChatDTO chatDTO) {
         return Result.success(aiContext.chat(chatDTO, PromptConstant.COMMON_SYSTEM_PROMPT));
     }
+
+    @Log(title = "RAG增强聊天", businessType = BusinessTypeEnum.CHAT)
+    @PostMapping("/chatWithRAG")
+    @Operation(summary = "RAG增强聊天", description = "需要登录")
+    public Result<ChatVO> chatWithRAG(@RequestBody ChatDTO chatDTO) {
+        return Result.success(aiContext.chatWithRAG(chatDTO, PromptConstant.TEACHING_CONTENT_DESIGN_SYSTEM_PROMPT));
+    }
+
 }

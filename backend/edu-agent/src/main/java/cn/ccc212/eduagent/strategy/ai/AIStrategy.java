@@ -7,4 +7,5 @@ public interface AIStrategy {
 
     ChatVO chat(ChatDTO chatDTO, String systemPrompt);
 
+    ChatVO chatWithRAG(ChatDTO chatDTO, String systemPrompt);
 }
