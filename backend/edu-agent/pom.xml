@@ -75,6 +75,13 @@
 			<version>1.0.0-M6.1</version>
 		</dependency>
 
+		<!-- 整合 PGVector 向量存储 -->
+		<dependency>
+		    <groupId>org.springframework.ai</groupId>
+		    <artifactId>spring-ai-starter-vector-store-pgvector</artifactId>
+		    <version>1.0.0-M7</version>
+		</dependency>
+
 		<!-- 阿里云百炼，灵积大模型服务 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>

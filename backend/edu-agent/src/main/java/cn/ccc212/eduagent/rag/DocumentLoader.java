@@ -27,10 +27,10 @@ public class DocumentLoader {
      * 加载系统文档
      * @return 文档列表
      */
-    public List<Document> loadMarkdowns() {
+    public List<Document> loadDefaultMarkdowns() {
         List<Document> allDocuments = new ArrayList<>();
         try {
-            Resource[] resources = resourcePatternResolver.getResources("classpath:document/java/test/*.md");
+            Resource[] resources = resourcePatternResolver.getResources("classpath:document/java/*.md");
             for (Resource resource : resources) {
                 String filename = resource.getFilename();
                 MarkdownDocumentReaderConfig config = MarkdownDocumentReaderConfig.builder()
@@ -38,6 +38,7 @@ public class DocumentLoader {
                         .withIncludeCodeBlock(false)
                         .withIncludeBlockquote(false)
                         .withAdditionalMetadata("filename", filename)
+                        .withAdditionalMetadata("user_id", "0")
                         .build();
                 MarkdownDocumentReader markdownDocumentReader = new MarkdownDocumentReader(resource, config);
                 allDocuments.addAll(markdownDocumentReader.get());

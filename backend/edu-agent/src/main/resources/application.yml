@@ -9,21 +9,29 @@ spring:
   profiles:
     active: local
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/edu_agent?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
-    username: root
-    password: 123456
-    type: com.alibaba.druid.pool.DruidDataSource
-    # druid 连接池管理
-    druid:
-      # 初始化时建立物理连接的个数
-      initial-size: 5
-      # 连接池的最小空闲数量
-      min-idle: 5
-      # 连接池最大连接数量
-      max-active: 20
-      # 获取连接时最大等待时间，单位毫秒
-      max-wait: 60000
+    # MySQL 数据库
+    mysql:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/edu_agent?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+      username: root
+      password: 123456
+      type: com.alibaba.druid.pool.DruidDataSource
+      # druid 连接池管理
+      druid:
+        # 初始化时建立物理连接的个数
+        initial-size: 5
+        # 连接池的最小空闲数量
+        min-idle: 5
+        # 连接池最大连接数量
+        max-active: 20
+        # 获取连接时最大等待时间，单位毫秒
+        max-wait: 60000
+    # 向量数据库
+    vector:
+      driver-class-name: org.postgresql.Driver
+      url: jdbc:postgresql://postgresql:5432/ccc212_ai_agent
+      username: user
+      password: password
   data:
     redis:
       host: localhost
@@ -69,6 +77,15 @@ spring:
         options:
           model: glm-4-flash
           temperature: 0.7 # 用于控制大型语言模型生成文本的随机性或创造性，值越高输出越多样和有创意但可能不准确，值越低输出越确定和保守但可能缺乏变化
+    vectorstore:
+      pgvector:
+        index-type: HNSW
+        dimensions: 1536
+        distance-type: COSINE_DISTANCE
+        max-document-batch-size: 10000 # Optional: Maximum number of documents per batch
+        initialize-schema: true
+        schema-name: public
+        table-name: vector_store
 
 mybatis-plus:
   type-aliases-package: cn.ccc212.eduagen.pojo.entity

@@ -26,7 +26,8 @@ public class ZhipuAIStrategyImpl implements AIStrategy {
 
     private final ChatModel zhiPuAiChatModel;
     private final ChatMemory inMemoryChatMemory;
-    private final VectorStore eduAgentVectorStore;
+//    private final VectorStore eduAgentVectorStore;
+    private final VectorStore pgVectorStore;
 
     @Override
     public ChatVO chat(ChatDTO chatDTO, String systemPrompt) {
@@ -83,7 +84,9 @@ public class ZhipuAIStrategyImpl implements AIStrategy {
                         // 开启日志，便于观察效果
                         .advisors(new MyLoggerAdvisor())
                         // 应用 RAG 知识库问答
-                        .advisors(new QuestionAnswerAdvisor(eduAgentVectorStore))
+//                        .advisors(new QuestionAnswerAdvisor(eduAgentVectorStore))
+                        // 应用 RAG 检索增强服务（基于 PgVector 向量存储）
+                        .advisors(new QuestionAnswerAdvisor(pgVectorStore))
                         .call()
                         .content())
                 .setChatId(finalChatId);
